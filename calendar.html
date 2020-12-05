@@ -1,0 +1,153 @@
+<html moznomarginboxes mozdisallowselectionprint>
+  <head>
+    <title>Calendar</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+      body {
+          font-family: Roboto, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          max-width: 50rem;
+          margin: auto;
+      }
+      .page {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+      }
+      .page-header {
+          display: flex;
+          justify-content: space-between;
+          font-size: 6vh;
+          text-transform: uppercase;
+      }
+      .cell {
+          margin: auto 0;
+          text-align: center;
+          display: flex;
+          justify-content: space-between;
+      }
+      .name {
+          font-size: 7vh;
+      }
+      .number {
+          font-size: 10vh;
+      }
+      .notes {
+          font-size: 7vh;
+          padding: 5vh 0;
+          text-transform: uppercase;
+      }
+      .comments {
+          margin: auto;
+      }
+      .day {
+          width: 20vh;
+      }
+      hr {
+          width: 100%;
+          border: 2px solid black;
+          margin: 0;
+      }
+
+      @media print {
+          .pagebreak { page-break-before: always; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page">
+        <div class="page-header">
+          <div class="month">Janvier</div>
+          <div class="year">2021</div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="notes">Notes</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Lun</div>
+            <div class="number">11</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Mar</div>
+            <div class="number">12</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Mer</div>
+            <div class="number">13</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+
+      </div>
+
+      <div class="pagebreak"> </div>
+
+      <div class="page">
+        <div class="page-header">
+          <div class="month">Janvier</div>
+          <div class="year">2021</div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Jeu</div>
+            <div class="number">14</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Ven</div>
+            <div class="number">15</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Sam</div>
+            <div class="number">16</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+        <hr/>
+
+        <div class="cell">
+          <div class="day">
+            <div class="name">Dim</div>
+            <div class="number">17</div>
+          </div>
+          <div class="comments"></div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+body {
+    font-family: Roboto, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    text-align: center;
+    padding: 3rem;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav input, .nav select {
+    max-width: 10rem;
+    margin: 2rem auto;
+}
+.front-page {
+    display: flex;
+    align-items: center;
+}
+.front-page div {
+    margin: auto;
+    font-size: 20vh;
+}
+.container {
+    max-width: 50rem;
+    margin: auto;
+}
+.page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 6vh;
+    text-transform: uppercase;
+}
+.cell {
+    margin: auto 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+.name {
+    font-size: 7vh;
+}
+.number {
+    font-size: 10vh;
+}
+.notes {
+    font-size: 7vh;
+    padding: 5vh 0;
+    text-transform: uppercase;
+}
+.comments {
+    margin: auto;
+}
+.day {
+    width: 20vh;
+}
+hr {
+    width: 100%;
+    border: 2px solid black;
+    margin: 0;
+}
+
+@media print {
+    .pagebreak { page-break-before: always; }
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
