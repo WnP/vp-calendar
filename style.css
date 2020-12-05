@@ -26,6 +26,12 @@ html {
     max-width: 10rem;
     margin: 2rem auto;
 }
+.nav input {
+    margin-bottom: 1rem;
+}
+.nav select {
+    margin-top: 1rem;
+}
 .front-page {
     display: flex;
     align-items: center;
@@ -76,6 +82,11 @@ hr {
     width: 100%;
     border: 2px solid black;
     margin: 0;
+}
+
+#copyleft {
+    display: inline-block;
+    transform: rotate(180deg);
 }
 
 @media print {

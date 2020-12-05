@@ -1,8 +1,8 @@
 module Main exposing (Msg(..), main, update, view)
 
 import Browser
-import Html exposing (Html, a, div, hr, img, input, option, select, text)
-import Html.Attributes exposing (alt, class, href, selected, src, style, target, type_, value)
+import Html exposing (Html, a, div, hr, img, input, option, select, span, text)
+import Html.Attributes exposing (alt, class, href, id, selected, src, style, target, type_, value)
 import Html.Events exposing (onInput)
 import I18n
 import Iso8601
@@ -240,6 +240,13 @@ view model =
                                 [ text (I18n.toString lang) ]
                         )
                 )
+            , a
+                [ href "https://github.com/WnP/vp-calendar"
+                , target "_blank"
+                ]
+                [ span [ id "copyleft" ] [ text "©" ]
+                , text "2020 Steeve Chailloux - MIT License"
+                ]
             , a
                 [ href "https://www.buymeacoffee.com/steevec"
                 , target "_blank"
