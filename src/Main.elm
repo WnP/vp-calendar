@@ -257,6 +257,7 @@ view model =
                     ]
                 ]
             ]
+        , div [ class "pagebreak" ] []
         , model.firstDay
             |> calDays
             |> splitByWeek
@@ -283,12 +284,14 @@ view model =
                              ]
                                 ++ viewDays model (List.take 3 week)
                             )
+                        , div [ class "pagebreak" ] []
                         , div [ class "page" ]
                             ([ viewHeader model rightFirstDay
                              , hr [] []
                              ]
                                 ++ viewDays model (List.drop 3 week)
                             )
+                        , div [ class "pagebreak" ] []
                         ]
                 )
             |> div [ class "container" ]
