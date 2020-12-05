@@ -22,7 +22,8 @@ main =
 
 
 type alias Model =
-    { firstDay : Time.Posix
+    { firstDay : Maybe Time.Posix
+    , currentValue : Int
     , monthFormater : Time.Month -> String
     , dayFormater : Time.Weekday -> String
     , language : I18n.Language
@@ -32,6 +33,7 @@ type alias Model =
 init : String -> ( Model, Cmd Msg )
 init lang =
     ( { firstDay = getFirstDayOfTheYear 1070
+      , currentValue = 0
       , monthFormater = Fr.monthName
       , dayFormater = Fr.dayShort
       , language = I18n.parseLang lang
@@ -40,12 +42,12 @@ init lang =
     )
 
 
-getFirstDayOfTheYear : Int -> Time.Posix
+getFirstDayOfTheYear : Int -> Maybe Time.Posix
 getFirstDayOfTheYear year =
     String.fromInt year
         ++ "-01-01"
         |> Iso8601.toTime
-        |> Result.withDefault (Time.millisToPosix 0)
+        |> Result.toMaybe
 
 
 dayLength : Int
@@ -187,13 +189,16 @@ update msg model =
                 { model | firstDay = getFirstDayOfTheYear year }
 
         GotInput value ->
-            ( { model
-                | firstDay =
+            let
+                v =
                     value
                         |> String.toFloat
-                        |> Maybe.withDefault 1970
+                        |> Maybe.withDefault 1
                         |> floor
-                        |> getFirstDayOfTheYear
+            in
+            ( { model
+                | firstDay = getFirstDayOfTheYear v
+                , currentValue = v
               }
             , Cmd.none
             )
@@ -216,7 +221,8 @@ view model =
             [ input
                 [ value
                     (model.firstDay
-                        |> Time.toYear Time.utc
+                        |> Maybe.map (Time.toYear Time.utc)
+                        |> Maybe.withDefault model.currentValue
                         |> String.fromInt
                     )
                 , type_ "number"
@@ -251,52 +257,56 @@ view model =
             [ div [ class "page front-page" ]
                 [ div []
                     [ model.firstDay
-                        |> Time.toYear Time.utc
-                        |> String.fromInt
+                        |> Maybe.map (Time.toYear Time.utc)
+                        |> Maybe.map String.fromInt
+                        |> Maybe.withDefault (String.fromInt model.currentValue)
                         |> text
                     ]
                 ]
             ]
         , div [ class "pagebreak" ] []
         , model.firstDay
-            |> calDays
-            |> splitByWeek
-            |> List.map
-                (\week ->
-                    let
-                        leftFirstDay =
-                            week
-                                |> List.head
-                                |> Maybe.withDefault (Time.millisToPosix 0)
-
-                        rightFirstDay =
-                            week
-                                |> List.drop 3
-                                |> List.head
-                                |> Maybe.withDefault (Time.millisToPosix 0)
-                    in
-                    div []
-                        [ div [ class "page" ]
-                            ([ viewHeader model leftFirstDay
-                             , hr [] []
-                             , div [ class "cell" ] [ div [ class "notes" ] [ text "Notes" ] ]
-                             , hr [] []
-                             ]
-                                ++ viewDays model (List.take 3 week)
-                            )
-                        , div [ class "pagebreak" ] []
-                        , div [ class "page" ]
-                            ([ viewHeader model rightFirstDay
-                             , hr [] []
-                             ]
-                                ++ viewDays model (List.drop 3 week)
-                            )
-                        , div [ class "pagebreak" ] []
-                        ]
-                )
+            |> Maybe.map calDays
+            |> Maybe.map splitByWeek
+            |> Maybe.map (List.map (viewWeek model))
+            |> Maybe.withDefault []
             |> div [ class "container" ]
         ]
     }
+
+
+viewWeek : Model -> List Time.Posix -> Html Msg
+viewWeek model week =
+    let
+        leftFirstDay =
+            week
+                |> List.head
+                |> Maybe.withDefault (Time.millisToPosix 0)
+
+        rightFirstDay =
+            week
+                |> List.drop 3
+                |> List.head
+                |> Maybe.withDefault (Time.millisToPosix 0)
+    in
+    div []
+        [ div [ class "page" ]
+            ([ viewHeader model leftFirstDay
+             , hr [] []
+             , div [ class "cell" ] [ div [ class "notes" ] [ text "Notes" ] ]
+             , hr [] []
+             ]
+                ++ viewDays model (List.take 3 week)
+            )
+        , div [ class "pagebreak" ] []
+        , div [ class "page" ]
+            ([ viewHeader model rightFirstDay
+             , hr [] []
+             ]
+                ++ viewDays model (List.drop 3 week)
+            )
+        , div [ class "pagebreak" ] []
+        ]
 
 
 viewHeader : Model -> Time.Posix -> Html Msg
